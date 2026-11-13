@@ -33,25 +33,31 @@ let suchtext = "";
 
 // ---------- Speichern und Laden ----------
 
-function laden() {
-  try {
-    const text = localStorage.getItem(SPEICHER_SCHLUESSEL);
-    if (!text) return [];
-    const daten = JSON.parse(text);
-    if (!Array.isArray(daten)) return [];
-    // Nur gültige Einträge übernehmen
-    return daten.filter(
+// Nur gültige Bücher übernehmen (für gespeicherte Daten und für Sicherungsdateien)
+function gueltigeBuecher(daten) {
+  if (!Array.isArray(daten)) return [];
+  return daten
+    .filter(
       (b) =>
         b &&
         typeof b.id === "string" &&
         typeof b.titel === "string" &&
+        b.titel.trim() !== "" &&
         (b.status === "lesen" || b.status === "gelesen")
-    ).map((b) => ({
+    )
+    .map((b) => ({
       id: b.id,
       titel: b.titel,
       autor: typeof b.autor === "string" ? b.autor : "",
       status: b.status,
     }));
+}
+
+function laden() {
+  try {
+    const text = localStorage.getItem(SPEICHER_SCHLUESSEL);
+    if (!text) return [];
+    return gueltigeBuecher(JSON.parse(text));
   } catch (fehler) {
     return [];
   }
@@ -262,7 +268,96 @@ function buchLoeschen(id) {
   anzeigen();
 }
 
+// ---------- Sicherung als Datei ----------
+
+const sicherungMeldung = document.getElementById("sicherung-meldung");
+const sicherungDatei = document.getElementById("sicherung-datei");
+
+function zeigeSicherungMeldung(text, istFehler) {
+  sicherungMeldung.textContent = text;
+  sicherungMeldung.classList.toggle("fehler", Boolean(istFehler));
+}
+
+function datumHeute() {
+  const d = new Date();
+  const zweistellig = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${zweistellig(d.getMonth() + 1)}-${zweistellig(d.getDate())}`;
+}
+
+function anzahlBuecher(n) {
+  return n === 1 ? "1 Buch" : `${n} Bücher`;
+}
+
+function sicherungSpeichern() {
+  if (buecher.length === 0) {
+    zeigeSicherungMeldung("Es gibt noch keine Bücher zum Sichern.", true);
+    return;
+  }
+  const inhalt = JSON.stringify(buecher, null, 2);
+  const datei = new Blob([inhalt], { type: "application/json" });
+  const adresse = URL.createObjectURL(datei);
+
+  const link = document.createElement("a");
+  link.href = adresse;
+  link.download = `buecherliste-${datumHeute()}.json`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(adresse), 1000);
+
+  zeigeSicherungMeldung(
+    `Sicherung mit ${anzahlBuecher(buecher.length)} wurde als Datei „${link.download}“ gespeichert (meist im Ordner „Downloads“).`,
+    false
+  );
+}
+
+// Liest den Text einer Sicherungsdatei ein.
+// Bücher, die schon da sind (gleiche ID), werden übersprungen – so entsteht nichts doppelt.
+function sicherungEinlesen(text) {
+  let daten;
+  try {
+    daten = JSON.parse(text);
+  } catch (fehler) {
+    zeigeSicherungMeldung("Diese Datei ist keine gültige Sicherung der Bücherliste.", true);
+    return;
+  }
+
+  const ausDatei = gueltigeBuecher(daten);
+  if (ausDatei.length === 0) {
+    zeigeSicherungMeldung("In dieser Datei wurden keine Bücher gefunden.", true);
+    return;
+  }
+
+  const vorhandeneIds = new Set(buecher.map((b) => b.id));
+  const neue = ausDatei.filter((b) => !vorhandeneIds.has(b.id));
+
+  if (neue.length === 0) {
+    zeigeSicherungMeldung("Alle Bücher aus der Sicherung sind schon in deiner Liste.", false);
+    return;
+  }
+
+  buecher.push(...neue);
+  speichern();
+  anzeigen();
+  zeigeSicherungMeldung(`${anzahlBuecher(neue.length)} aus der Sicherung hinzugefügt.`, false);
+}
+
+function sicherungDateiGewaehlt() {
+  const datei = sicherungDatei.files[0];
+  if (!datei) return;
+  const leser = new FileReader();
+  leser.onload = () => sicherungEinlesen(String(leser.result));
+  leser.onerror = () => zeigeSicherungMeldung("Die Datei konnte nicht gelesen werden.", true);
+  leser.readAsText(datei);
+  // Zurücksetzen, damit dieselbe Datei später nochmal gewählt werden kann
+  sicherungDatei.value = "";
+}
+
 // ---------- Ereignisse verbinden ----------
+
+document.getElementById("sicherung-speichern").addEventListener("click", sicherungSpeichern);
+document.getElementById("sicherung-laden").addEventListener("click", () => sicherungDatei.click());
+sicherungDatei.addEventListener("change", sicherungDateiGewaehlt);
 
 // Enter-Taste soll die Seite nicht neu laden
 formular.addEventListener("submit", (ereignis) => ereignis.preventDefault());

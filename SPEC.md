@@ -26,6 +26,10 @@ Jedes Buch hat genau einen dieser zwei Status. Hat man ein Buch fertig gelesen, 
 4. **Buch löschen:** Jedes Buch hat einen Knopf „Löschen“. Vor dem Löschen kommt eine kurze Sicherheitsfrage.
 5. **Speichern:** Die Liste bleibt erhalten, auch wenn man die Seite neu lädt oder den Browser schließt (Speicherung im Browser über `localStorage`).
 6. **Leere Liste:** Ist eine Spalte leer, steht dort ein freundlicher Hinweis, z. B. „Noch keine Bücher hier.“
+7. **Sicherung als Datei:** Unten auf der Seite gibt es den Bereich „Sicherung“ mit zwei Knöpfen:
+   - „Sicherung speichern“ lädt alle Bücher als Datei `buecherliste-JJJJ-MM-TT.json` herunter (auf dem Handy meist in „Downloads“).
+   - „Sicherung laden“ öffnet die Dateiauswahl. Bücher aus der Datei werden **hinzugefügt**. Bücher, die schon in der Liste sind (gleiche ID), werden übersprungen. Es wird nichts gelöscht und nichts doppelt angelegt.
+   - Eine kurze Meldung zeigt, was passiert ist. Bei einer falschen Datei erscheint eine Fehlermeldung, und die Liste bleibt unverändert.
 
 ### Soll (die zwei sichtbaren Highlights)
 
@@ -45,7 +49,6 @@ Jedes Buch hat genau einen dieser zwei Status. Hat man ein Buch fertig gelesen, 
 - Bearbeiten eines Buches nach dem Anlegen (zum Ändern: löschen und neu anlegen)
 - Sortieren per Drag & Drop
 - Mehrere Nutzer, Anmeldung, Server, Synchronisation zwischen Geräten
-- Import und Export (z. B. als Datei)
 - Automatisches Abrufen von Buchdaten aus dem Internet
 
 ## 4. Daten
@@ -74,6 +77,7 @@ Aufbau von oben nach unten:
    - links: „Möchte ich lesen“, hellorange
    - rechts: „Gelesen“, hellgrün
    - Jedes Buch ist eine kleine weiße Karte mit Titel (fett), Autor darunter und den Knöpfen „Als gelesen markieren“ bzw. „Zurück auf ‚Möchte ich lesen‘“ und „Löschen“.
+5. **Sicherung:** Bereich am Ende der Seite mit den Knöpfen „Sicherung speichern“ und „Sicherung laden“ und einer Meldungszeile.
 
 Weitere Anforderungen:
 - Auf schmalen Bildschirmen (Handy) stehen die Spalten **untereinander** statt nebeneinander.
@@ -107,6 +111,10 @@ Die App gilt als fertig, wenn alle Punkte erfüllt sind:
 - [ ] Nach „Löschen“ und Bestätigen ist das Buch verschwunden. Bei „Abbrechen“ bleibt es da.
 - [ ] Nach dem Neuladen der Seite (F5) sind alle Bücher mit dem richtigen Status noch da.
 - [ ] Eine leere Spalte zeigt den Hinweis „Noch keine Bücher hier.“
+- [ ] „Sicherung speichern“ lädt eine Datei `buecherliste-JJJJ-MM-TT.json` mit allen Büchern herunter.
+- [ ] Nach Löschen aller Bücher und „Sicherung laden“ mit dieser Datei sind alle Bücher mit Titel, Autor und Status wieder da.
+- [ ] Dieselbe Sicherung ein zweites Mal laden legt keine Bücher doppelt an.
+- [ ] Eine falsche Datei (z. B. ein Foto oder eine Textdatei) zeigt eine Fehlermeldung, und die Liste bleibt unverändert.
 
 **Soll**
 - [ ] Die Spalte „Möchte ich lesen“ ist hellorange, die Spalte „Gelesen“ ist hellgrün.

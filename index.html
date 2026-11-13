@@ -46,6 +46,18 @@
         <ul class="buchliste" id="liste-gelesen"></ul>
       </section>
     </div>
+
+    <!-- Sicherung als Datei -->
+    <section class="sicherung">
+      <h2>Sicherung</h2>
+      <p class="sicherung-text">Speichere alle Bücher als Datei auf deinem Gerät. Mit „Sicherung laden“ holst du sie zurück.</p>
+      <div class="sicherung-knoepfe">
+        <button type="button" id="sicherung-speichern" class="knopf">Sicherung speichern</button>
+        <button type="button" id="sicherung-laden" class="knopf">Sicherung laden</button>
+        <input type="file" id="sicherung-datei" accept=".json,application/json" hidden>
+      </div>
+      <p id="sicherung-meldung" class="sicherung-meldung" role="status"></p>
+    </section>
   </main>
 
   <script src="script.js"></script>

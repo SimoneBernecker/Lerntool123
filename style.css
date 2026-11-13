@@ -241,6 +241,41 @@ select:focus,
   font-style: italic;
 }
 
+/* Sicherung */
+.sicherung {
+  margin-top: 32px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.sicherung h2 {
+  margin: 0 0 4px;
+  font-size: 1.2rem;
+}
+
+.sicherung-text {
+  margin: 0 0 12px;
+  color: #555;
+}
+
+.sicherung-knoepfe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sicherung-meldung {
+  margin: 10px 0 0;
+  font-weight: 600;
+  min-height: 1.5em;
+}
+
+.sicherung-meldung.fehler {
+  color: #b00020;
+}
+
 /* Handy: Spalten untereinander */
 @media (max-width: 640px) {
   .spalten {
