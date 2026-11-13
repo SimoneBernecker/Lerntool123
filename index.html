@@ -3,9 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lerntool123</title>
+  <title>Meine Bücherliste</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hallo</h1>
+  <main class="seite">
+    <h1>Meine Bücherliste</h1>
+
+    <!-- Formular: neues Buch hinzufügen -->
+    <form id="buch-formular" class="formular" novalidate>
+      <div class="feld">
+        <label for="titel">Titel *</label>
+        <input type="text" id="titel" autocomplete="off" placeholder="z. B. Momo">
+      </div>
+      <div class="feld">
+        <label for="autor">Autor/Autorin</label>
+        <input type="text" id="autor" autocomplete="off" placeholder="z. B. Michael Ende">
+      </div>
+      <div class="feld">
+        <label for="status">Status</label>
+        <select id="status">
+          <option value="lesen">Möchte ich lesen</option>
+          <option value="gelesen">Gelesen</option>
+        </select>
+      </div>
+      <button type="submit" class="knopf knopf-haupt">Hinzufügen</button>
+      <p id="hinweis" class="hinweis" role="alert"></p>
+    </form>
+
+    <!-- Filter-Knöpfe und Suche -->
+    <div class="filterleiste">
+      <div class="filter-knoepfe" role="group" aria-label="Filter">
+        <button type="button" class="knopf filter aktiv" data-filter="alle">Alle</button>
+        <button type="button" class="knopf filter" data-filter="lesen">Möchte ich lesen</button>
+        <button type="button" class="knopf filter" data-filter="gelesen">Gelesen</button>
+      </div>
+      <input type="search" id="suche" class="suche" placeholder="Suche nach Titel oder Autor …" aria-label="Suche">
+    </div>
+
+    <!-- Zwei Spalten -->
+    <div class="spalten">
+      <section class="spalte spalte-lesen" id="spalte-lesen">
+        <h2>Möchte ich lesen</h2>
+        <ul class="buchliste" id="liste-lesen"></ul>
+      </section>
+      <section class="spalte spalte-gelesen" id="spalte-gelesen">
+        <h2>Gelesen</h2>
+        <ul class="buchliste" id="liste-gelesen"></ul>
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>

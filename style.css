@@ -1,0 +1,222 @@
+/* Grundeinstellungen */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+  color: #222;
+  background: #f5f5f2;
+}
+
+.seite {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+h1 {
+  margin: 0 0 20px;
+  font-size: 2rem;
+}
+
+/* Formular */
+.formular {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.feld {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 180px;
+}
+
+.feld label {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+input,
+select {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background: #fff;
+}
+
+input:focus,
+select:focus,
+.knopf:focus-visible {
+  outline: 3px solid #4a90d9;
+  outline-offset: 1px;
+}
+
+.hinweis {
+  flex-basis: 100%;
+  margin: 0;
+  color: #b00020;
+  font-weight: 600;
+  min-height: 1.5em;
+}
+
+/* Knöpfe */
+.knopf {
+  font: inherit;
+  padding: 8px 14px;
+  border: 1px solid #888;
+  border-radius: 6px;
+  background: #fff;
+  color: #222;
+  cursor: pointer;
+}
+
+.knopf:hover {
+  background: #eee;
+}
+
+.knopf-haupt {
+  background: #2f6fbf;
+  border-color: #2f6fbf;
+  color: #fff;
+  font-weight: 600;
+}
+
+.knopf-haupt:hover {
+  background: #255a9c;
+}
+
+/* Filterleiste */
+.filterleiste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.filter-knoepfe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter.aktiv {
+  background: #333;
+  border-color: #333;
+  color: #fff;
+  font-weight: 600;
+}
+
+.suche {
+  flex: 1 1 220px;
+}
+
+/* Spalten */
+.spalten {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Wenn ein Filter aktiv ist, nimmt die eine Spalte die ganze Breite ein */
+.spalten.einzeln {
+  grid-template-columns: 1fr;
+}
+
+.spalte {
+  padding: 16px;
+  border-radius: 10px;
+  min-height: 150px;
+}
+
+.spalte[hidden] {
+  display: none;
+}
+
+.spalte h2 {
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+}
+
+.spalte-lesen {
+  background: #ffe0b8; /* hellorange */
+}
+
+.spalte-gelesen {
+  background: #c9f0c4; /* hellgrün */
+}
+
+/* Buchkarten */
+.buchliste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.buch {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.buch-titel {
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.buch-autor {
+  color: #555;
+  word-wrap: break-word;
+}
+
+.buch-knoepfe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.buch-knoepfe .knopf {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+}
+
+.knopf-loeschen {
+  border-color: #b00020;
+  color: #b00020;
+}
+
+.knopf-loeschen:hover {
+  background: #fde8eb;
+}
+
+.leer {
+  color: #555;
+  font-style: italic;
+}
+
+/* Handy: Spalten untereinander */
+@media (max-width: 640px) {
+  .spalten {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+}
