@@ -54,7 +54,7 @@ Jedes Buch wird als Objekt gespeichert:
 
 | Feld      | Typ    | Pflicht | Beispiel                       |
 |-----------|--------|---------|--------------------------------|
-| `id`      | Text   | ja      | `"1731500000000"` (Zeitstempel) |
+| `id`      | Text   | ja      | `"1731500000000-1"` (Zeitstempel + Nummer) |
 | `titel`   | Text   | ja      | `"Momo"`                       |
 | `autor`   | Text   | nein    | `"Michael Ende"`               |
 | `status`  | Text   | ja      | `"lesen"` oder `"gelesen"`     |
@@ -73,7 +73,7 @@ Aufbau von oben nach unten:
 4. **Zwei Spalten nebeneinander:**
    - links: „Möchte ich lesen“, hellorange
    - rechts: „Gelesen“, hellgrün
-   - Jedes Buch ist eine kleine weiße Karte mit Titel (fett), Autor darunter und den Knöpfen „Verschieben“ und „Löschen“.
+   - Jedes Buch ist eine kleine weiße Karte mit Titel (fett), Autor darunter und den Knöpfen „Als gelesen markieren“ bzw. „Zurück auf ‚Möchte ich lesen‘“ und „Löschen“.
 
 Weitere Anforderungen:
 - Auf schmalen Bildschirmen (Handy) stehen die Spalten **untereinander** statt nebeneinander.

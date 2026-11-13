@@ -3,9 +3,9 @@
 
 const SPEICHER_SCHLUESSEL = "buecherliste";
 
-// Elemente aus der Seite holen
 const ANZAHL_START_ZEILEN = 3;
 
+// Elemente aus der Seite holen
 const formular = document.getElementById("buch-formular");
 const zeilenBereich = document.getElementById("zeilen");
 const zeileHinzufuegenKnopf = document.getElementById("zeile-hinzufuegen");
@@ -165,8 +165,6 @@ function anzeigen() {
   }
 }
 
-// ---------- Aktionen ----------
-
 // ---------- Eingabezeilen ----------
 
 let zeilenZaehler = 0;
@@ -234,12 +232,13 @@ function buecherHinzufuegen(status) {
     return;
   }
 
+  // Hinweis zuerst leeren, damit eine Fehlermeldung von speichern() sichtbar bleibt
+  zeigeHinweis("");
   buecher.push(...neue);
   speichern();
 
   // Formular für die nächsten Bücher vorbereiten
   zeilenZuruecksetzen();
-  zeigeHinweis("");
   zeilenBereich.querySelector(".eingabe-titel").focus();
 
   anzeigen();
