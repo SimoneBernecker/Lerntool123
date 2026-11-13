@@ -4,10 +4,12 @@
 const SPEICHER_SCHLUESSEL = "buecherliste";
 
 // Elemente aus der Seite holen
+const ANZAHL_START_ZEILEN = 3;
+
 const formular = document.getElementById("buch-formular");
-const titelFeld = document.getElementById("titel");
-const autorFeld = document.getElementById("autor");
-const statusFeld = document.getElementById("status");
+const zeilenBereich = document.getElementById("zeilen");
+const zeileHinzufuegenKnopf = document.getElementById("zeile-hinzufuegen");
+const statusKnoepfe = document.querySelectorAll(".status-knoepfe .knopf");
 const hinweis = document.getElementById("hinweis");
 const sucheFeld = document.getElementById("suche");
 const filterKnoepfe = document.querySelectorAll(".filter");
@@ -69,9 +71,12 @@ function zeigeHinweis(text) {
   hinweis.textContent = text;
 }
 
+let idZaehler = 0;
+
 function neueId() {
-  // Zeitstempel plus Zufallszahl, damit zwei schnelle Klicks verschiedene IDs ergeben
-  return Date.now().toString() + Math.floor(Math.random() * 1000).toString();
+  // Zeitstempel plus fortlaufende Nummer: auch mehrere Bücher auf einmal bekommen verschiedene IDs
+  idZaehler++;
+  return Date.now().toString() + "-" + idZaehler;
 }
 
 function passtZurSuche(buch) {
@@ -162,26 +167,80 @@ function anzeigen() {
 
 // ---------- Aktionen ----------
 
-function buchHinzufuegen(ereignis) {
-  ereignis.preventDefault();
+// ---------- Eingabezeilen ----------
 
-  const titel = titelFeld.value.trim();
-  const autor = autorFeld.value.trim();
-  const status = statusFeld.value === "gelesen" ? "gelesen" : "lesen";
+let zeilenZaehler = 0;
 
-  if (titel === "") {
-    zeigeHinweis("Bitte gib einen Titel ein.");
-    titelFeld.focus();
+function neueZeile() {
+  zeilenZaehler++;
+  const zeile = document.createElement("div");
+  zeile.className = "zeile";
+
+  const titel = document.createElement("input");
+  titel.type = "text";
+  titel.className = "eingabe-titel";
+  titel.autocomplete = "off";
+  titel.placeholder = "Titel, z. B. Momo";
+  titel.setAttribute("aria-label", `Titel, Zeile ${zeilenZaehler}`);
+
+  const autor = document.createElement("input");
+  autor.type = "text";
+  autor.className = "eingabe-autor";
+  autor.autocomplete = "off";
+  autor.placeholder = "Autor/Autorin, z. B. Michael Ende";
+  autor.setAttribute("aria-label", `Autor/Autorin, Zeile ${zeilenZaehler}`);
+
+  zeile.appendChild(titel);
+  zeile.appendChild(autor);
+  zeilenBereich.appendChild(zeile);
+  return zeile;
+}
+
+function zeilenZuruecksetzen() {
+  zeilenBereich.replaceChildren();
+  zeilenZaehler = 0;
+  for (let i = 0; i < ANZAHL_START_ZEILEN; i++) {
+    neueZeile();
+  }
+}
+
+// ---------- Aktionen ----------
+
+function buecherHinzufuegen(status) {
+  const neue = [];
+  const zeilen = zeilenBereich.querySelectorAll(".zeile");
+
+  for (const zeile of zeilen) {
+    const titelFeld = zeile.querySelector(".eingabe-titel");
+    const titel = titelFeld.value.trim();
+    const autor = zeile.querySelector(".eingabe-autor").value.trim();
+
+    // Ganz leere Zeilen einfach überspringen
+    if (titel === "" && autor === "") continue;
+
+    // Autor ohne Titel: nichts anlegen, Hinweis zeigen
+    if (titel === "") {
+      zeigeHinweis("In einer Zeile fehlt der Titel. Bitte ergänze ihn oder lösche den Autor.");
+      titelFeld.focus();
+      return;
+    }
+
+    neue.push({ id: neueId(), titel, autor, status });
+  }
+
+  if (neue.length === 0) {
+    zeigeHinweis("Bitte gib mindestens einen Titel ein.");
+    zeilenBereich.querySelector(".eingabe-titel").focus();
     return;
   }
 
-  buecher.push({ id: neueId(), titel, autor, status });
+  buecher.push(...neue);
   speichern();
 
-  // Formular für das nächste Buch vorbereiten
-  formular.reset();
+  // Formular für die nächsten Bücher vorbereiten
+  zeilenZuruecksetzen();
   zeigeHinweis("");
-  titelFeld.focus();
+  zeilenBereich.querySelector(".eingabe-titel").focus();
 
   anzeigen();
 }
@@ -206,11 +265,22 @@ function buchLoeschen(id) {
 
 // ---------- Ereignisse verbinden ----------
 
-formular.addEventListener("submit", buchHinzufuegen);
+// Enter-Taste soll die Seite nicht neu laden
+formular.addEventListener("submit", (ereignis) => ereignis.preventDefault());
 
-titelFeld.addEventListener("input", () => {
-  if (titelFeld.value.trim() !== "") zeigeHinweis("");
+for (const knopf of statusKnoepfe) {
+  knopf.addEventListener("click", () => {
+    buecherHinzufuegen(knopf.dataset.status === "gelesen" ? "gelesen" : "lesen");
+  });
+}
+
+zeileHinzufuegenKnopf.addEventListener("click", () => {
+  const zeile = neueZeile();
+  zeile.querySelector(".eingabe-titel").focus();
 });
+
+// Hinweis verschwinden lassen, sobald wieder getippt wird
+zeilenBereich.addEventListener("input", () => zeigeHinweis(""));
 
 sucheFeld.addEventListener("input", () => {
   suchtext = sucheFeld.value.trim().toLowerCase();
@@ -224,5 +294,6 @@ for (const knopf of filterKnoepfe) {
   });
 }
 
-// Beim Start einmal alles anzeigen
+// Beim Start Eingabezeilen anlegen und alles anzeigen
+zeilenZuruecksetzen();
 anzeigen();

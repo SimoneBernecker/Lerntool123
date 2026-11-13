@@ -18,7 +18,9 @@ Jedes Buch hat genau einen dieser zwei Status. Hat man ein Buch fertig gelesen, 
 
 ### Muss (ohne das ist die App nicht fertig)
 
-1. **Buch hinzufügen:** Formular mit den Feldern „Titel“ (Pflicht), „Autor/Autorin“ (freiwillig) und „Status“ (Auswahl: „Möchte ich lesen“ oder „Gelesen“). Ein Knopf „Hinzufügen“ legt das Buch an.
+1. **Mehrere Bücher auf einmal hinzufügen:** Das Formular hat mehrere Zeilen mit je einem Feld „Titel“ (Pflicht) und „Autor/Autorin“ (freiwillig). Am Anfang gibt es 3 Zeilen, mit „+ weitere Zeile“ kommen mehr dazu. Darunter stehen zwei Knöpfe: „Habe ich gelesen“ und „Möchte ich lesen“. Ein Klick legt alle ausgefüllten Zeilen mit diesem Status an. Danach sind die Zeilen wieder leer.
+   - Ganz leere Zeilen werden übersprungen.
+   - Hat eine Zeile einen Autor, aber keinen Titel, wird **nichts** angelegt und ein Hinweis erscheint.
 2. **Bücher anzeigen:** Alle Bücher werden in **zwei Spalten nebeneinander** angezeigt: links „Möchte ich lesen“, rechts „Gelesen“.
 3. **Status ändern:** Jedes Buch hat einen Knopf, mit dem man es in die andere Spalte verschiebt (z. B. „Als gelesen markieren“ bzw. „Zurück auf ‚Möchte ich lesen‘“).
 4. **Buch löschen:** Jedes Buch hat einen Knopf „Löschen“. Vor dem Löschen kommt eine kurze Sicherheitsfrage.
@@ -66,7 +68,7 @@ Jedes Buch wird als Objekt gespeichert:
 Aufbau von oben nach unten:
 
 1. **Überschrift:** „Meine Bücherliste“
-2. **Formular:** Titel, Autor/Autorin, Status-Auswahl, Knopf „Hinzufügen“
+2. **Formular:** mehrere Zeilen mit Titel und Autor/Autorin, Knopf „+ weitere Zeile“, darunter die Knöpfe „Habe ich gelesen“ (hellgrün) und „Möchte ich lesen“ (hellorange)
 3. **Filterleiste:** Knöpfe „Alle“ | „Möchte ich lesen“ | „Gelesen“ und daneben das Suchfeld
 4. **Zwei Spalten nebeneinander:**
    - links: „Möchte ich lesen“, hellorange
@@ -97,8 +99,10 @@ Die App gilt als fertig, wenn alle Punkte erfüllt sind:
 
 **Muss**
 - [ ] Nach Doppelklick auf `index.html` öffnet sich die App ohne Fehler (auch die Browser-Konsole zeigt keine Fehler).
-- [ ] Ein Buch mit Titel „Momo“, Autor „Michael Ende“ und Status „Möchte ich lesen“ erscheint nach Klick auf „Hinzufügen“ in der linken Spalte.
-- [ ] Ohne Titel wird kein Buch angelegt und es erscheint ein Hinweis.
+- [ ] Nach Eingabe von „Momo“ / „Michael Ende“ und „Krabat“ / „Otfried Preußler“ in zwei Zeilen und Klick auf „Möchte ich lesen“ stehen beide Bücher in der linken Spalte, und die Zeilen sind wieder leer.
+- [ ] Mit „+ weitere Zeile“ kommt eine zusätzliche Eingabezeile dazu.
+- [ ] Sind alle Zeilen leer, wird kein Buch angelegt und es erscheint ein Hinweis.
+- [ ] Steht in einer Zeile nur ein Autor ohne Titel, wird kein Buch angelegt und es erscheint ein Hinweis.
 - [ ] Nach Klick auf „Als gelesen markieren“ steht das Buch in der rechten Spalte, und umgekehrt.
 - [ ] Nach „Löschen“ und Bestätigen ist das Buch verschwunden. Bei „Abbrechen“ bleibt es da.
 - [ ] Nach dem Neuladen der Seite (F5) sind alle Bücher mit dem richtigen Status noch da.
