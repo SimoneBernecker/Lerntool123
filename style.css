@@ -282,6 +282,13 @@ select:focus,
   color: #b00020;
 }
 
+.version {
+  margin: 24px 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #777;
+}
+
 /* Handy: Spalten untereinander */
 @media (max-width: 640px) {
   .spalten {

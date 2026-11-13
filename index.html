@@ -6,7 +6,7 @@
   <title>Meine Bücherliste</title>
   <!-- Versionsnummer (?v=...) bei jeder Änderung an style.css/script.js erhöhen,
        damit Browser nicht die alte Datei aus dem Zwischenspeicher nehmen. -->
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
   <main class="seite">
@@ -61,12 +61,17 @@
       <p class="sicherung-text import-text">Bücherliste aus Excel übernehmen: In Excel „Datei → Speichern unter → CSV UTF-8“ wählen. Spalte A: Autor, Spalte B: Titel. Alle Bücher kommen nach „Gelesen“, doppelte werden übersprungen.</p>
       <div class="sicherung-knoepfe">
         <button type="button" id="csv-importieren" class="knopf">Aus Excel importieren (CSV)</button>
-        <input type="file" id="csv-datei" accept=".csv,text/csv,text/plain" hidden>
+        <!-- Bewusst ohne "accept": Android kennzeichnet CSV-Dateien je nach Gerät unterschiedlich -->
+        <input type="file" id="csv-datei" hidden>
       </div>
       <p id="sicherung-meldung" class="sicherung-meldung" role="status"></p>
     </section>
+
+    <!-- Wird von script.js gefüllt. Bleibt es leer oder zeigt eine alte Nummer,
+         läuft noch ein altes script.js aus dem Zwischenspeicher. -->
+    <p id="version" class="version"></p>
   </main>
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>

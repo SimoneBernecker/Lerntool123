@@ -3,6 +3,9 @@
 
 const SPEICHER_SCHLUESSEL = "buecherliste";
 
+// Muss zur Nummer "?v=..." in index.html passen
+const APP_VERSION = 5;
+
 const ANZAHL_START_ZEILEN = 3;
 
 // Elemente aus der Seite holen
@@ -552,6 +555,8 @@ for (const knopf of filterKnoepfe) {
     anzeigen();
   });
 }
+
+document.getElementById("version").textContent = "Version " + APP_VERSION;
 
 // Beim Start Eingabezeilen anlegen und alles anzeigen
 zeilenZuruecksetzen();
