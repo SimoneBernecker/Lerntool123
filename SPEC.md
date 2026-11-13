@@ -30,6 +30,16 @@ Jedes Buch hat genau einen dieser zwei Status. Hat man ein Buch fertig gelesen, 
    - „Sicherung speichern“ lädt alle Bücher als Datei `buecherliste-JJJJ-MM-TT.json` herunter (auf dem Handy meist in „Downloads“).
    - „Sicherung laden“ öffnet die Dateiauswahl. Bücher aus der Datei werden **hinzugefügt**. Bücher, die schon in der Liste sind (gleiche ID), werden übersprungen. Es wird nichts gelöscht und nichts doppelt angelegt.
    - Eine kurze Meldung zeigt, was passiert ist. Bei einer falschen Datei erscheint eine Fehlermeldung, und die Liste bleibt unverändert.
+8. **Import aus Excel (CSV):** Im selben Bereich gibt es den Knopf „Aus Excel importieren (CSV)“.
+   - Die Excel-Liste wird vorher in Excel als **„CSV UTF-8“** gespeichert. Normales „CSV“ geht auch, Umlaute werden in beiden Fällen richtig gelesen.
+   - Aufbau: Spalte A = Autor, Spalte B = Titel. Eine Überschriftszeile („Autor“ / „Titel“ oder „Buch“) wird erkannt und übersprungen; die Spalten werden dann anhand der Überschrift zugeordnet.
+   - Trennzeichen Semikolon, Komma oder Tabulator werden automatisch erkannt. Werte in Anführungszeichen werden richtig gelesen.
+   - Alle importierten Bücher bekommen den Status **„Gelesen“**.
+   - **Doppelte werden übersprungen:** gleicher Titel und gleicher Autor (ohne Unterschied bei Groß-/Kleinschreibung und Leerzeichen) – egal ob das Buch schon in der App steht oder mehrfach in der Datei.
+   - Leere Zeilen werden übersprungen, Zeilen ohne Titel werden übersprungen und gezählt.
+   - Eine Meldung zeigt, wie viele Bücher importiert und wie viele übersprungen wurden.
+   - Der Import ist für ca. 2000 Bücher ausgelegt.
+   - Import erfolgt am PC. Auf das Handy kommen die Bücher über „Sicherung speichern“ (PC) und „Sicherung laden“ (Handy).
 
 ### Soll (die zwei sichtbaren Highlights)
 
@@ -77,7 +87,7 @@ Aufbau von oben nach unten:
    - links: „Möchte ich lesen“, hellorange
    - rechts: „Gelesen“, hellgrün
    - Jedes Buch ist eine kleine weiße Karte mit Titel (fett), Autor darunter und den Knöpfen „Als gelesen markieren“ bzw. „Zurück auf ‚Möchte ich lesen‘“ und „Löschen“.
-5. **Sicherung:** Bereich am Ende der Seite mit den Knöpfen „Sicherung speichern“ und „Sicherung laden“ und einer Meldungszeile.
+5. **Sicherung und Import:** Bereich am Ende der Seite mit den Knöpfen „Sicherung speichern“, „Sicherung laden“, „Aus Excel importieren (CSV)“ und einer Meldungszeile.
 
 Weitere Anforderungen:
 - Auf schmalen Bildschirmen (Handy) stehen die Spalten **untereinander** statt nebeneinander.
@@ -115,6 +125,9 @@ Die App gilt als fertig, wenn alle Punkte erfüllt sind:
 - [ ] Nach Löschen aller Bücher und „Sicherung laden“ mit dieser Datei sind alle Bücher mit Titel, Autor und Status wieder da.
 - [ ] Dieselbe Sicherung ein zweites Mal laden legt keine Bücher doppelt an.
 - [ ] Eine falsche Datei (z. B. ein Foto oder eine Textdatei) zeigt eine Fehlermeldung, und die Liste bleibt unverändert.
+- [ ] Eine CSV-Datei aus Excel mit Überschrift „Autor;Titel“ und der Zeile „Abel Barbara;Nichts schöner als der Tod“ ergibt in „Gelesen“ das Buch „Nichts schöner als der Tod“ von „Abel Barbara“ (Umlaute korrekt).
+- [ ] Dieselbe CSV-Datei ein zweites Mal importieren legt nichts doppelt an; die Meldung nennt die übersprungenen Bücher.
+- [ ] Eine CSV-Datei mit ca. 2000 Büchern wird in wenigen Sekunden importiert, und die App bleibt bedienbar.
 
 **Soll**
 - [ ] Die Spalte „Möchte ich lesen“ ist hellorange, die Spalte „Gelesen“ ist hellgrün.

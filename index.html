@@ -47,14 +47,19 @@
       </section>
     </div>
 
-    <!-- Sicherung als Datei -->
+    <!-- Sicherung als Datei und Import aus Excel -->
     <section class="sicherung">
-      <h2>Sicherung</h2>
+      <h2>Sicherung und Import</h2>
       <p class="sicherung-text">Speichere alle Bücher als Datei auf deinem Gerät. Mit „Sicherung laden“ holst du sie zurück.</p>
       <div class="sicherung-knoepfe">
         <button type="button" id="sicherung-speichern" class="knopf">Sicherung speichern</button>
         <button type="button" id="sicherung-laden" class="knopf">Sicherung laden</button>
         <input type="file" id="sicherung-datei" accept=".json,application/json" hidden>
+      </div>
+      <p class="sicherung-text import-text">Bücherliste aus Excel übernehmen: In Excel „Datei → Speichern unter → CSV UTF-8“ wählen. Spalte A: Autor, Spalte B: Titel. Alle Bücher kommen nach „Gelesen“, doppelte werden übersprungen.</p>
+      <div class="sicherung-knoepfe">
+        <button type="button" id="csv-importieren" class="knopf">Aus Excel importieren (CSV)</button>
+        <input type="file" id="csv-datei" accept=".csv,text/csv,text/plain" hidden>
       </div>
       <p id="sicherung-meldung" class="sicherung-meldung" role="status"></p>
     </section>
