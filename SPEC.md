@@ -40,6 +40,10 @@ Jedes Buch hat genau einen dieser zwei Status. Hat man ein Buch fertig gelesen, 
    - Eine Meldung zeigt, wie viele Bücher importiert und wie viele übersprungen wurden.
    - Der Import ist für ca. 2000 Bücher ausgelegt.
    - Import erfolgt am PC. Auf das Handy kommen die Bücher über „Sicherung speichern“ (PC) und „Sicherung laden“ (Handy).
+9. **Spalten einklappen:** Die Überschriften „Möchte ich lesen“ und „Gelesen“ sind Klapp-Knöpfe mit Pfeil (▼ offen, ▶ zu).
+   - Antippen klappt die Bücherliste der Spalte ein oder aus. Die Überschrift bleibt sichtbar.
+   - Die App merkt sich den Zustand (auch nach dem Schließen), gespeichert unter `buecherliste-eingeklappt`.
+   - Bei aktiver Suche werden Treffer auch in einer eingeklappten Spalte gezeigt; antippen klappt sie trotzdem zu.
 
 ### Soll (die zwei sichtbaren Highlights)
 
@@ -128,6 +132,9 @@ Die App gilt als fertig, wenn alle Punkte erfüllt sind:
 - [ ] Eine CSV-Datei aus Excel mit Überschrift „Autor;Titel“ und der Zeile „Abel Barbara;Nichts schöner als der Tod“ ergibt in „Gelesen“ das Buch „Nichts schöner als der Tod“ von „Abel Barbara“ (Umlaute korrekt).
 - [ ] Dieselbe CSV-Datei ein zweites Mal importieren legt nichts doppelt an; die Meldung nennt die übersprungenen Bücher.
 - [ ] Eine CSV-Datei mit ca. 2000 Büchern wird in wenigen Sekunden importiert, und die App bleibt bedienbar.
+- [ ] Antippen von „Gelesen“ klappt die Liste ein (▶), erneutes Antippen klappt sie aus (▼).
+- [ ] Nach dem Neuladen ist eine eingeklappte Spalte weiterhin eingeklappt.
+- [ ] Bei eingeklappter Spalte „Gelesen“ zeigt die Suche trotzdem passende gelesene Bücher.
 
 **Soll**
 - [ ] Die Spalte „Möchte ich lesen“ ist hellorange, die Spalte „Gelesen“ ist hellgrün.

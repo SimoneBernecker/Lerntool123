@@ -4,7 +4,10 @@
 const SPEICHER_SCHLUESSEL = "buecherliste";
 
 // Muss zur Nummer "?v=..." in index.html passen
-const APP_VERSION = 5;
+const APP_VERSION = 6;
+
+// Merkt sich, welche Spalten eingeklappt sind
+const KLAPP_SCHLUESSEL = "buecherliste-eingeklappt";
 
 const ANZAHL_START_ZEILEN = 3;
 
@@ -33,6 +36,9 @@ const spalten = {
 let buecher = laden();
 let aktiverFilter = "alle";
 let suchtext = "";
+let eingeklappt = klappZustandLaden();
+// Während einer Suche von Hand zugeklappt (gilt nur bis sich der Suchtext ändert)
+let zuTrotzSuche = { lesen: false, gelesen: false };
 
 // ---------- Speichern und Laden ----------
 
@@ -71,6 +77,23 @@ function speichern() {
     localStorage.setItem(SPEICHER_SCHLUESSEL, JSON.stringify(buecher));
   } catch (fehler) {
     zeigeHinweis("Speichern hat nicht geklappt. Die Änderung geht beim Neuladen verloren.");
+  }
+}
+
+function klappZustandLaden() {
+  try {
+    const daten = JSON.parse(localStorage.getItem(KLAPP_SCHLUESSEL) || "{}");
+    return { lesen: daten.lesen === true, gelesen: daten.gelesen === true };
+  } catch (fehler) {
+    return { lesen: false, gelesen: false };
+  }
+}
+
+function klappZustandSpeichern() {
+  try {
+    localStorage.setItem(KLAPP_SCHLUESSEL, JSON.stringify(eingeklappt));
+  } catch (fehler) {
+    // Nicht schlimm: dann ist die Spalte beim nächsten Öffnen wieder aufgeklappt
   }
 }
 
@@ -143,6 +166,14 @@ function anzeigen() {
 
     // Spalte je nach Filter zeigen oder verstecken
     spalte.bereich.hidden = aktiverFilter !== "alle" && aktiverFilter !== status;
+
+    // Eingeklappt? Bei aktiver Suche trotzdem die Treffer zeigen
+    const zu = eingeklappt[status] && (suchtext === "" || zuTrotzSuche[status]);
+    spalte.liste.hidden = zu;
+    spalte.bereich.classList.toggle("eingeklappt", zu);
+    const umschalter = spalte.bereich.querySelector(".spalte-umschalter");
+    umschalter.setAttribute("aria-expanded", zu ? "false" : "true");
+    umschalter.querySelector(".pfeil").textContent = zu ? "▶" : "▼";
 
     // Liste leeren und neu füllen
     spalte.liste.replaceChildren();
@@ -520,6 +551,23 @@ function csvDateiGewaehlt() {
 
 // ---------- Ereignisse verbinden ----------
 
+for (const umschalter of document.querySelectorAll(".spalte-umschalter")) {
+  umschalter.addEventListener("click", () => {
+    const status = umschalter.dataset.status;
+    const istOffen = umschalter.getAttribute("aria-expanded") === "true";
+    if (istOffen) {
+      // Zuklappen. War sie nur wegen der Suche offen, bis zur nächsten Suche zu lassen.
+      if (eingeklappt[status]) zuTrotzSuche[status] = true;
+      eingeklappt[status] = true;
+    } else {
+      eingeklappt[status] = false;
+      zuTrotzSuche[status] = false;
+    }
+    klappZustandSpeichern();
+    anzeigen();
+  });
+}
+
 document.getElementById("csv-importieren").addEventListener("click", () => csvDatei.click());
 csvDatei.addEventListener("change", csvDateiGewaehlt);
 
@@ -546,6 +594,7 @@ zeilenBereich.addEventListener("input", () => zeigeHinweis(""));
 
 sucheFeld.addEventListener("input", () => {
   suchtext = sucheFeld.value.trim().toLowerCase();
+  zuTrotzSuche = { lesen: false, gelesen: false };
   anzeigen();
 });
 

@@ -6,7 +6,7 @@
   <title>Meine Bücherliste</title>
   <!-- Versionsnummer (?v=...) bei jeder Änderung an style.css/script.js erhöhen,
        damit Browser nicht die alte Datei aus dem Zwischenspeicher nehmen. -->
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
   <main class="seite">
@@ -40,11 +40,19 @@
     <!-- Zwei Spalten -->
     <div class="spalten">
       <section class="spalte spalte-lesen" id="spalte-lesen">
-        <h2>Möchte ich lesen</h2>
+        <h2>
+          <button type="button" class="spalte-umschalter" data-status="lesen" aria-expanded="true" aria-controls="liste-lesen">
+            <span class="pfeil" aria-hidden="true">▼</span> Möchte ich lesen
+          </button>
+        </h2>
         <ul class="buchliste" id="liste-lesen"></ul>
       </section>
       <section class="spalte spalte-gelesen" id="spalte-gelesen">
-        <h2>Gelesen</h2>
+        <h2>
+          <button type="button" class="spalte-umschalter" data-status="gelesen" aria-expanded="true" aria-controls="liste-gelesen">
+            <span class="pfeil" aria-hidden="true">▼</span> Gelesen
+          </button>
+        </h2>
         <ul class="buchliste" id="liste-gelesen"></ul>
       </section>
     </div>
@@ -72,6 +80,6 @@
     <p id="version" class="version"></p>
   </main>
 
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>

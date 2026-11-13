@@ -158,6 +158,8 @@ select:focus,
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+  /* Eingeklappte Spalte nicht auf die Höhe der anderen strecken */
+  align-items: start;
 }
 
 /* Wenn ein Filter aktiv ist, nimmt die eine Spalte die ganze Breite ein */
@@ -178,6 +180,47 @@ select:focus,
 .spalte h2 {
   margin: 0 0 12px;
   font-size: 1.3rem;
+}
+
+/* Spaltenüberschrift als Klapp-Knopf */
+.spalte-umschalter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 4px 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.spalte-umschalter:focus-visible {
+  outline: 3px solid #4a90d9;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.pfeil {
+  display: inline-block;
+  width: 1.2em;
+  font-size: 0.9em;
+}
+
+/* Eingeklappte Spalte: nur die Überschrift, kein Abstand darunter */
+.spalte.eingeklappt {
+  min-height: 0;
+}
+
+.spalte.eingeklappt h2 {
+  margin-bottom: 0;
+}
+
+.buchliste[hidden] {
+  display: none;
 }
 
 .spalte-lesen {
